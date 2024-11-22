@@ -1,11 +1,10 @@
 # Expense Management Application
 
-[![CI](https://github.com/[username]/expenses/actions/workflows/ci.yml/badge.svg)](https://github.com/[username]/expenses/actions/workflows/ci.yml)
+[![CI](https://github.com/andrewsheelan/expenses/actions/workflows/ci.yml/badge.svg)](https://github.com/andrewsheelan/expenses/actions/workflows/ci.yml)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
 [![Ruby](https://img.shields.io/badge/ruby-8.0.0-red.svg)](https://www.ruby-lang.org/en/)
 [![Rails](https://img.shields.io/badge/rails-8.0.0-red.svg)](https://rubyonrails.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Coverage Status](https://coveralls.io/repos/github/[username]/expenses/badge.svg?branch=main)](https://coveralls.io/github/[username]/expenses?branch=main)
 
 A modern expense tracking application built with Ruby on Rails, featuring real-time chat functionality and beautiful dark-themed UI.
 

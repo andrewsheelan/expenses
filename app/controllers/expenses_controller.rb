@@ -1,6 +1,6 @@
 class ExpensesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_expense, only: [:show, :edit, :update, :destroy]
+  before_action :set_expense, only: [ :show, :edit, :update, :destroy ]
 
   # GET /expenses or /expenses.json
   def index
@@ -25,7 +25,7 @@ class ExpensesController < ApplicationController
     @expense = current_user.expenses.build(expense_params)
 
     if @expense.save
-      redirect_to expenses_path, notice: 'Expense was successfully created.'
+      redirect_to expenses_path, notice: "Expense was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -34,7 +34,7 @@ class ExpensesController < ApplicationController
   # PATCH/PUT /expenses/1 or /expenses/1.json
   def update
     if @expense.update(expense_params)
-      redirect_to expenses_path, notice: 'Expense was successfully updated.'
+      redirect_to expenses_path, notice: "Expense was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -43,7 +43,7 @@ class ExpensesController < ApplicationController
   # DELETE /expenses/1 or /expenses/1.json
   def destroy
     @expense.destroy
-    redirect_to expenses_path, notice: 'Expense was successfully deleted.'
+    redirect_to expenses_path, notice: "Expense was successfully deleted."
   end
 
   private

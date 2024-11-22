@@ -11,7 +11,7 @@ class MessagesController < ApplicationController
         format.html { redirect_to @conversation }
       end
     else
-      redirect_to @conversation, alert: 'Failed to send message.'
+      redirect_to @conversation, alert: "Failed to send message."
     end
   end
 

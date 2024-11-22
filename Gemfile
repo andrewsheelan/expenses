@@ -53,7 +53,7 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-  
+
   # Additional testing and code quality gems
   gem "rspec-rails"
   gem "factory_bot_rails"
@@ -72,8 +72,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-  
+
   # Code coverage
   gem "simplecov"
-  gem "coveralls", require: false
 end

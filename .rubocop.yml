@@ -13,7 +13,7 @@ require:
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 8.0
+  TargetRubyVersion: 3.4
   Exclude:
     - 'db/**/*'
     - 'config/**/*'

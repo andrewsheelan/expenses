@@ -4,7 +4,7 @@ class DashboardController < ApplicationController
   def index
     @expenses = current_user.expenses.includes(:category)
     @categories = current_user.categories
-    
+
     # Monthly spending data
     @monthly_spending = @expenses
       .group_by { |e| e.date.beginning_of_month }
@@ -22,7 +22,7 @@ class DashboardController < ApplicationController
 
   private
 
-  def calculate_predictions
+  def calculate_predictions # rubocop:disable Metrics/AbcSize
     return {} if @monthly_spending.empty?
 
     # Calculate the trend using linear regression
@@ -47,7 +47,7 @@ class DashboardController < ApplicationController
 
     3.times do |i|
       next_month = last_month + (i + 1).month
-      predicted_value = [intercept + slope * (n + i), 0].max
+      predicted_value = [ intercept + slope * (n + i), 0 ].max
       predictions[next_month] = predicted_value.round(2)
     end
 
