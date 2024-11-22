@@ -1,0 +1,16 @@
+<div class="flex <%= message.user == current_user ? 'justify-end' : 'justify-start' %>">
+  <div class="flex flex-col <%= message.user == current_user ? 'items-end' : 'items-start' %> max-w-[70%]">
+    <div class="flex items-center gap-2 mb-1 text-sm text-gray-400">
+      <% unless message.user == current_user %>
+        <span class="font-medium"><%= message.user.full_name %></span>
+      <% end %>
+      <span class="text-xs"><%= message.created_at.strftime("%H:%M") %></span>
+    </div>
+    
+    <div class="<%= message.user == current_user ? 'bg-pink-600' : 'bg-gray-700' %> 
+                rounded-lg px-4 py-2 shadow-md
+                <%= message.user == current_user ? 'rounded-br-none' : 'rounded-bl-none' %>">
+      <p class="text-white break-words"><%= message.content %></p>
+    </div>
+  </div>
+</div>

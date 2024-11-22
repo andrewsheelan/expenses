@@ -1,0 +1,17 @@
+<div class="mx-auto md:w-2/3 w-full flex">
+  <div class="mx-auto">
+    <% if notice.present? %>
+      <div class="bg-green-900 border-l-4 border-green-400 p-4 mb-4">
+        <p class="text-green-400" id="notice"><%= notice %></p>
+      </div>
+    <% end %>
+
+    <%= render @expense %>
+
+    <div class="mt-6 space-x-4">
+      <%= link_to "Edit expense", edit_expense_path(@expense), class: "rounded-lg py-3 px-5 bg-green-700 text-white hover:bg-green-600 inline-block font-medium" %>
+      <%= link_to "Back to expenses", expenses_path, class: "rounded-lg py-3 px-5 bg-gray-700 text-gray-200 hover:bg-gray-600 inline-block font-medium" %>
+      <%= button_to "Delete expense", @expense, method: :delete, class: "rounded-lg py-3 px-5 bg-pink-700 text-white hover:bg-pink-600 font-medium", form: { class: "inline-block" } %>
+    </div>
+  </div>
+</div>

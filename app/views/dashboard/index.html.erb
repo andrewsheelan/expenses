@@ -1,0 +1,186 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-pink-400 mb-2">Dashboard</h1>
+    <p class="text-gray-400">Welcome back, <%= current_user.email %></p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+    <!-- Monthly Spending Trend -->
+    <div class="bg-gray-800 rounded-xl shadow-lg border border-pink-700 p-6">
+      <h2 class="text-xl font-bold text-pink-400 mb-4">Monthly Spending Trend & Predictions</h2>
+      <div class="h-64">
+        <canvas id="spendingTrendChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Category Distribution -->
+    <div class="bg-gray-800 rounded-xl shadow-lg border border-pink-700 p-6">
+      <h2 class="text-xl font-bold text-pink-400 mb-4">Spending by Category</h2>
+      <div class="h-64">
+        <canvas id="categoryChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Stats -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="bg-gray-800 rounded-xl shadow-lg border border-pink-700 p-6">
+      <h3 class="text-sm font-medium text-pink-400 mb-2">Total Expenses</h3>
+      <p class="text-2xl font-bold text-green-400">
+        <%= number_to_currency(@expenses.sum(&:amount)) %>
+      </p>
+    </div>
+
+    <div class="bg-gray-800 rounded-xl shadow-lg border border-pink-700 p-6">
+      <h3 class="text-sm font-medium text-pink-400 mb-2">This Month</h3>
+      <p class="text-2xl font-bold text-green-400">
+        <%= number_to_currency(@expenses.where(date: Time.current.beginning_of_month..Time.current.end_of_month).sum(&:amount)) %>
+      </p>
+    </div>
+
+    <div class="bg-gray-800 rounded-xl shadow-lg border border-pink-700 p-6">
+      <h3 class="text-sm font-medium text-pink-400 mb-2">Categories</h3>
+      <p class="text-2xl font-bold text-green-400"><%= @categories.count %></p>
+    </div>
+
+    <div class="bg-gray-800 rounded-xl shadow-lg border border-pink-700 p-6">
+      <h3 class="text-sm font-medium text-pink-400 mb-2">Average per Month</h3>
+      <p class="text-2xl font-bold text-green-400">
+        <%= number_to_currency(@monthly_spending.values.sum / [@monthly_spending.keys.count, 1].max) %>
+      </p>
+    </div>
+  </div>
+
+  <!-- Predicted vs Actual Table -->
+  <div class="bg-gray-800 rounded-xl shadow-lg border border-pink-700 p-6">
+    <h2 class="text-xl font-bold text-pink-400 mb-4">Spending Predictions</h2>
+    <div class="overflow-x-auto">
+      <table class="min-w-full">
+        <thead>
+          <tr class="border-b border-gray-700">
+            <th class="py-3 px-6 text-left text-sm font-medium text-pink-400">Month</th>
+            <th class="py-3 px-6 text-right text-sm font-medium text-pink-400">Predicted Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @prediction_data.each do |month, amount| %>
+            <tr class="border-b border-gray-700">
+              <td class="py-3 px-6 text-left text-gray-300"><%= month.strftime("%B %Y") %></td>
+              <td class="py-3 px-6 text-right text-green-400"><%= number_to_currency(amount) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<%= javascript_tag do %>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Spending Trend Chart
+    const trendCtx = document.getElementById('spendingTrendChart').getContext('2d');
+    const monthlyData = <%= raw @monthly_spending.to_json %>;
+    const predictionData = <%= raw @prediction_data.to_json %>;
+    
+    const allData = {...monthlyData, ...predictionData};
+    const labels = Object.keys(allData).map(date => new Date(date).toLocaleDateString('default', { month: 'short', year: 'numeric' }));
+    const actualValues = Object.keys(allData).map(date => monthlyData[date] || null);
+    const predictedValues = Object.keys(allData).map(date => predictionData[date] || null);
+
+    new Chart(trendCtx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Actual Spending',
+          data: actualValues,
+          borderColor: 'rgb(236, 72, 153)',
+          backgroundColor: 'rgba(236, 72, 153, 0.1)',
+          tension: 0.4,
+          fill: true
+        }, {
+          label: 'Predicted Spending',
+          data: predictedValues,
+          borderColor: 'rgb(34, 197, 94)',
+          backgroundColor: 'rgba(34, 197, 94, 0.1)',
+          tension: 0.4,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: {
+              color: '#f3f4f6'
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: {
+              color: 'rgba(107, 114, 128, 0.1)'
+            },
+            ticks: {
+              color: '#f3f4f6'
+            }
+          },
+          y: {
+            grid: {
+              color: 'rgba(107, 114, 128, 0.1)'
+            },
+            ticks: {
+              color: '#f3f4f6',
+              callback: function(value) {
+                return new Intl.NumberFormat('en-US', {
+                  style: 'currency',
+                  currency: 'USD'
+                }).format(value);
+              }
+            }
+          }
+        }
+      }
+    });
+
+    // Category Chart
+    const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+    const categoryData = <%= raw @category_spending.to_json %>;
+    
+    new Chart(categoryCtx, {
+      type: 'doughnut',
+      data: {
+        labels: Object.keys(categoryData),
+        datasets: [{
+          data: Object.values(categoryData),
+          backgroundColor: [
+            'rgba(236, 72, 153, 0.8)',
+            'rgba(34, 197, 94, 0.8)',
+            'rgba(59, 130, 246, 0.8)',
+            'rgba(251, 146, 60, 0.8)',
+            'rgba(147, 51, 234, 0.8)',
+            'rgba(236, 72, 153, 0.6)',
+            'rgba(34, 197, 94, 0.6)',
+            'rgba(59, 130, 246, 0.6)',
+            'rgba(251, 146, 60, 0.6)',
+            'rgba(147, 51, 234, 0.6)'
+          ]
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'right',
+            labels: {
+              color: '#f3f4f6'
+            }
+          }
+        }
+      }
+    });
+  });
+<% end %>

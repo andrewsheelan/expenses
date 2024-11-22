@@ -1,0 +1,30 @@
+<div id="<%= dom_id expense %>" class="bg-gray-800 rounded-lg p-6 border border-pink-700">
+  <div class="space-y-4">
+    <div>
+      <strong class="block text-sm font-medium text-pink-400 mb-1">Title</strong>
+      <p class="text-gray-200"><%= expense.title %></p>
+    </div>
+
+    <div>
+      <strong class="block text-sm font-medium text-pink-400 mb-1">Amount</strong>
+      <p class="text-green-400 text-2xl font-bold"><%= number_to_currency(expense.amount) %></p>
+    </div>
+
+    <div>
+      <strong class="block text-sm font-medium text-pink-400 mb-1">Date</strong>
+      <p class="text-gray-200"><%= expense.date.strftime("%B %d, %Y") %></p>
+    </div>
+
+    <div>
+      <strong class="block text-sm font-medium text-pink-400 mb-1">Category</strong>
+      <p class="text-gray-200"><%= expense.category.name %></p>
+    </div>
+
+    <% if expense.description.present? %>
+      <div>
+        <strong class="block text-sm font-medium text-pink-400 mb-1">Description</strong>
+        <p class="text-gray-200"><%= expense.description %></p>
+      </div>
+    <% end %>
+  </div>
+</div>

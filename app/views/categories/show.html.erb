@@ -1,0 +1,53 @@
+<div class="mx-auto md:w-2/3 w-full">
+  <% if notice.present? %>
+    <div class="bg-green-900/50 backdrop-blur-sm border border-green-500/20 p-4 rounded-lg mb-6">
+      <p class="text-green-400"><%= notice %></p>
+    </div>
+  <% end %>
+
+  <div class="bg-gray-800 rounded-xl shadow-lg border border-pink-700 overflow-hidden">
+    <div class="p-8">
+      <div class="flex justify-between items-start mb-6">
+        <h1 class="text-3xl font-bold text-pink-400"><%= @category.name %></h1>
+        <div class="flex space-x-3">
+          <%= link_to edit_category_path(@category), class: "p-2 rounded-lg bg-gray-900/50 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200" do %>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+          <% end %>
+          <%= button_to category_path(@category), method: :delete, class: "p-2 rounded-lg bg-gray-900/50 text-red-400 hover:bg-red-900/20 hover:text-red-300 transition-colors duration-200", form: { data: { turbo_confirm: "Are you sure?" } } do %>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+          <% end %>
+        </div>
+      </div>
+
+      <% if @category.description.present? %>
+        <div class="mb-8">
+          <h2 class="text-sm font-medium text-pink-400 mb-2">Description</h2>
+          <p class="text-gray-300"><%= @category.description %></p>
+        </div>
+      <% end %>
+
+      <div class="bg-gray-900/50 rounded-lg p-6">
+        <h2 class="text-sm font-medium text-pink-400 mb-4">Associated Expenses</h2>
+        <div class="text-2xl font-bold text-green-400">
+          <%= @category.expenses.count %> expenses
+        </div>
+        <p class="text-gray-400 mt-1">
+          Total amount: <%= number_to_currency(@category.expenses.sum(:amount)) %>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6">
+    <%= link_to categories_path, class: "inline-flex items-center px-6 py-3 rounded-lg bg-gray-900/50 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200" do %>
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+      </svg>
+      Back to categories
+    <% end %>
+  </div>
+</div>

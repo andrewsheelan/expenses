@@ -1,0 +1,70 @@
+<div class="min-h-screen bg-gray-900 text-white">
+  <div class="max-w-4xl mx-auto p-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center space-x-4">
+        <div class="w-12 h-12 rounded-full bg-pink-600 flex items-center justify-center">
+          <span class="text-xl font-semibold">
+            <%= @conversation.other_user(current_user).full_name[0].upcase %>
+          </span>
+        </div>
+        <div>
+          <h1 class="text-2xl font-bold text-pink-500">
+            <%= @conversation.other_user(current_user).full_name %>
+          </h1>
+          <p class="text-sm text-gray-400">
+            <%= @conversation.other_user(current_user).email %>
+          </p>
+        </div>
+      </div>
+      <%= link_to conversations_path, 
+          class: "px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors duration-200 flex items-center space-x-2" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        <span>Back to Messages</span>
+      <% end %>
+    </div>
+
+    <!-- Messages Container -->
+    <div class="bg-gray-800 rounded-lg shadow-lg">
+      <%= turbo_stream_from @conversation %>
+      <div id="messages" 
+           class="p-6 space-y-6 max-h-[60vh] overflow-y-auto"
+           data-controller="scroll"
+           data-action="turbo:frame-load->scroll#scrollToBottom">
+        <%= render @messages %>
+      </div>
+
+      <!-- Message Form -->
+      <div class="p-4 border-t border-gray-700">
+        <%= form_with(model: [@conversation, @message],
+                    class: "flex items-end gap-4",
+                    data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" }) do |f| %>
+          <div class="flex-grow">
+            <%= f.text_field :content,
+                          class: "w-full px-4 py-3 bg-gray-700 rounded-lg border border-gray-600 focus:ring-2 focus:ring-pink-500 focus:border-transparent focus:outline-none placeholder-gray-400",
+                          placeholder: "Type your message...",
+                          autocomplete: 'off' %>
+          </div>
+          <%= button_tag type: 'submit',
+                      class: "px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors duration-200 flex items-center space-x-2" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+            <span>Send</span>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_tag do %>
+  document.addEventListener('turbo:load', function() {
+    const messagesContainer = document.getElementById('messages');
+    if (messagesContainer) {
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+  });
+<% end %>

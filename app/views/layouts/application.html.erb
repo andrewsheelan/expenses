@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Expenses Manager" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body class="bg-gray-900 text-gray-100">
+    <nav class="bg-gray-800 border-b border-pink-700">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <span class="text-pink-500 font-bold text-xl">ExpenseTracker</span>
+            </div>
+            <div class="hidden md:block">
+              <div class="ml-10 flex items-baseline space-x-4">
+                <%= link_to 'Dashboard', root_path, class: 'bg-gray-900 text-green-400 px-3 py-2 rounded-md text-sm font-medium' %>
+                <%= link_to 'Expenses', expenses_path, class: 'text-gray-300 hover:bg-gray-700 hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium' %>
+                <%= link_to 'Categories', categories_path, class: 'text-gray-300 hover:bg-gray-700 hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium' %>
+                <%= link_to "Messages", conversations_path, class: "text-white hover:text-pink-500" %>
+              </div>
+            </div>
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-4 flex items-center md:ml-6">
+              <% if user_signed_in? %>
+                <span class="text-green-400 mr-4"><%= current_user.email %></span>
+                <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'bg-pink-700 hover:bg-pink-600 text-white px-4 py-2 rounded-md text-sm font-medium' %>
+              <% else %>
+                <%= link_to 'Sign In', new_user_session_path, class: 'bg-pink-700 hover:bg-pink-600 text-white px-4 py-2 rounded-md text-sm font-medium' %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <% if notice %>
+        <div class="bg-green-900 border-l-4 border-green-400 p-4 mb-4">
+          <p class="text-green-400"><%= notice %></p>
+        </div>
+      <% end %>
+      <% if alert %>
+        <div class="bg-pink-900 border-l-4 border-pink-400 p-4 mb-4">
+          <p class="text-pink-400"><%= alert %></p>
+        </div>
+      <% end %>
+      
+      <%= yield %>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<div class="bg-gray-800 rounded-lg shadow-lg p-6 border border-pink-700">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+  <% content_for :title, "Expenses" %>
+
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-pink-400">Expenses</h1>
+    <%= link_to new_expense_path, class: "bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded-md transition duration-150 ease-in-out" do %>
+      <i class="fas fa-plus-circle mr-2"></i> New Expense
+    <% end %>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full">
+      <thead>
+        <tr class="border-b border-pink-700">
+          <th class="text-left py-3 px-4 text-green-400">Date</th>
+          <th class="text-left py-3 px-4 text-green-400">Title</th>
+          <th class="text-left py-3 px-4 text-green-400">Category</th>
+          <th class="text-right py-3 px-4 text-green-400">Amount</th>
+          <th class="text-right py-3 px-4 text-green-400">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @expenses.each do |expense| %>
+          <tr class="border-b border-gray-700 hover:bg-gray-700">
+            <td class="py-3 px-4 text-gray-300"><%= expense.date.strftime("%b %d, %Y") %></td>
+            <td class="py-3 px-4 text-gray-300"><%= expense.title %></td>
+            <td class="py-3 px-4 text-gray-300"><%= expense.category.name %></td>
+            <td class="py-3 px-4 text-green-400 text-right"><%= number_to_currency(expense.amount) %></td>
+            <td class="py-3 px-4 text-right space-x-2">
+              <%= link_to expense_path(expense), class: "text-pink-400 hover:text-pink-300" do %>
+                <i class="fas fa-eye"></i>
+              <% end %>
+              <%= link_to edit_expense_path(expense), class: "text-green-400 hover:text-green-300" do %>
+                <i class="fas fa-edit"></i>
+              <% end %>
+              <%= button_to expense_path(expense), method: :delete, class: "text-pink-400 hover:text-pink-300 inline", form: { class: "inline" }, data: { confirm: "Are you sure?" } do %>
+                <i class="fas fa-trash"></i>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,117 @@
+<div class="min-h-screen bg-gray-900 text-white p-6">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-3xl font-bold text-pink-500">Messages</h1>
+        <p class="text-sm text-gray-400 mt-1">
+          <%= pluralize(@conversations.count, 'conversation') %> total
+        </p>
+      </div>
+      
+      <!-- Search (placeholder for future feature) -->
+      <div class="relative">
+        <input type="text" 
+               placeholder="Search conversations..." 
+               class="w-64 px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm placeholder-gray-500 focus:ring-2 focus:ring-pink-500 focus:border-transparent focus:outline-none"
+               disabled>
+        <div class="absolute right-3 top-2.5 text-gray-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <!-- Conversations List -->
+      <div class="md:col-span-2">
+        <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+          <div class="p-4 border-b border-gray-700">
+            <h2 class="text-xl font-semibold text-green-400">Recent Conversations</h2>
+          </div>
+          
+          <div class="divide-y divide-gray-700">
+            <% if @conversations.any? %>
+              <% @conversations.each do |conversation| %>
+                <% other_user = conversation.other_user(current_user) %>
+                <%= link_to conversation_path(conversation), 
+                    class: "block p-4 hover:bg-gray-700 transition-colors duration-200" do %>
+                  <div class="flex items-start space-x-4">
+                    <!-- User Avatar -->
+                    <div class="w-12 h-12 rounded-full bg-pink-600 flex items-center justify-center flex-shrink-0">
+                      <span class="text-lg font-semibold">
+                        <%= other_user.full_name[0].upcase %>
+                      </span>
+                    </div>
+                    
+                    <!-- Message Content -->
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center justify-between">
+                        <h3 class="font-medium text-pink-400 truncate">
+                          <%= other_user.full_name %>
+                        </h3>
+                        <span class="text-xs text-gray-500">
+                          <%= conversation.messages.last&.created_at&.strftime("%H:%M") || "New" %>
+                        </span>
+                      </div>
+                      <p class="text-sm text-gray-400 truncate mt-1">
+                        <%= conversation.messages.last&.content&.truncate(50) || "No messages yet" %>
+                      </p>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            <% else %>
+              <div class="p-8 text-center text-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                <p class="text-lg font-medium">No conversations yet</p>
+                <p class="text-sm mt-2">Start chatting with someone from the list on the right</p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Users List -->
+      <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+        <div class="p-4 border-b border-gray-700">
+          <h2 class="text-xl font-semibold text-green-400">Start New Chat</h2>
+        </div>
+        
+        <div class="p-4 space-y-3">
+          <% if @users.any? %>
+            <% @users.each do |user| %>
+              <div class="p-3 bg-gray-700 rounded-lg">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-pink-600 flex items-center justify-center">
+                      <span class="font-semibold"><%= user.full_name[0].upcase %></span>
+                    </div>
+                    <div>
+                      <h3 class="font-medium"><%= user.full_name %></h3>
+                      <p class="text-xs text-gray-400"><%= user.email %></p>
+                    </div>
+                  </div>
+                  <%= button_to conversations_path(recipient_id: user.id),
+                      method: :post,
+                      class: "px-3 py-1.5 bg-pink-600 text-white text-sm rounded hover:bg-pink-700 transition-colors duration-200 flex items-center space-x-1" do %>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="text-center py-8 text-gray-400">
+              <p>No other users available</p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
