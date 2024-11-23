@@ -110,14 +110,17 @@
       <!-- AI Conversation -->
       <div class="fixed bottom-4 right-4 w-96" data-controller="ai-chat">
         <div class="bg-gray-800 rounded-xl shadow-lg border border-pink-700 p-4">
-          <div class="flex justify-between items-center mb-4">
+          <div class="flex justify-between items-center">
             <h3 class="text-lg font-bold text-pink-400">AI Assistant</h3>
-            <button data-action="ai-chat#toggle" class="text-gray-400 hover:text-gray-300">
-              <i class="fas fa-times"></i>
-            </button>
+            <div class="flex space-x-2">
+              <button data-action="ai-chat#toggle" class="text-gray-400 hover:text-gray-300">
+                <i class="fas fa-minus" data-ai-chat-target="toggleIcon"></i>
+              </button>
+            </div>
           </div>
           
-          <div class="flex flex-col h-96">
+          <div class="flex flex-col h-96" data-ai-chat-target="content">
+            <div class="mb-4"></div>
             <div data-ai-chat-target="messages" class="flex-1 overflow-y-auto mb-4 space-y-4">
               <div class="mb-4">
                 <p class="text-sm text-pink-400">AI Assistant</p>

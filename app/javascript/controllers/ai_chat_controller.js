@@ -1,19 +1,25 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["messages", "input"]
+  static targets = ["messages", "input", "content", "toggleIcon"]
 
   connect() {
     this.messagesTarget.scrollTop = this.messagesTarget.scrollHeight
+    this.isMinimized = false
   }
 
   toggle(event) {
     event.preventDefault()
-    const container = this.element
-    if (container.style.display === "none") {
-      container.style.display = "block"
+    this.isMinimized = !this.isMinimized
+    
+    if (this.isMinimized) {
+      this.contentTarget.style.display = "none"
+      this.toggleIconTarget.classList.remove("fa-minus")
+      this.toggleIconTarget.classList.add("fa-plus")
     } else {
-      container.style.display = "none"
+      this.contentTarget.style.display = "flex"
+      this.toggleIconTarget.classList.remove("fa-plus")
+      this.toggleIconTarget.classList.add("fa-minus")
     }
   }
 

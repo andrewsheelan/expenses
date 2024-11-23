@@ -25,9 +25,8 @@ A modern expense tracking application built with Ruby on Rails, featuring real-t
 ![alt text](gallery/messages.png)
 
 #### Conversations:
-![alt text](gallery/conversations.png)
-![alt text](gallery/conversations_search.png)
 ![alt text](gallery/conversations_ai.png)
+![alt text](gallery/conversations_search.png)
 
 #### Expenses:
 ![alt text](gallery/expenses.png)
