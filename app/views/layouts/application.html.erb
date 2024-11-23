@@ -162,17 +162,6 @@
       </nav>
 
       <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <% if notice %>
-          <div class="bg-green-900 border-l-4 border-green-400 p-4 mb-4">
-            <p class="text-green-400"><%= notice %></p>
-          </div>
-        <% end %>
-        <% if alert %>
-          <div class="bg-pink-900 border-l-4 border-pink-400 p-4 mb-4">
-            <p class="text-pink-400"><%= alert %></p>
-          </div>
-        <% end %>
-        
         <%= yield %>
       </main>
     </div>

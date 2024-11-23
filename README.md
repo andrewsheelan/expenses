@@ -6,33 +6,44 @@
 [![Rails](https://img.shields.io/badge/rails-8.0.0-red.svg)](https://rubyonrails.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A modern expense tracking application built with Ruby on Rails, featuring real-time chat functionality and beautiful dark-themed UI.
+A modern expense tracking application built with Ruby on Rails, featuring real-time chat functionality and beautiful (glossed) dark-themed UI.
 
 ## Features
 
 ### Screenshots
-Sign-in:
+
+#### Sign-in:
 ![alt text](gallery/signin.png)
 
-Sign-up:
+#### Sign-up:
+
 ![alt text](gallery/signup.png)
 
-Messages:
-![alt text](gallery/messages.png)
+#### Dashboard:
 
-Conversations:
-![alt text](gallery/conversations.png)
-
-Dashboard:
 ![alt text](gallery/dashboard.png)
 
-Expenses:
+
+#### Messages:
+
+![alt text](gallery/messages.png)
+
+#### Conversations:
+
+![alt text](gallery/conversations.png)
+![alt text](gallery/conversations_search.png)
+
+#### Expenses:
+
 ![alt text](gallery/expenses.png)
 ![alt text](gallery/new_expense.png)
+![alt text](gallery/edit_expense.png)
 
-Categories:
+#### Categories:
+
 ![alt text](gallery/categories.png)
 ![alt text](gallery/new_category.png)
+![alt text](gallery/edit_category.png)
 
 ## Key Features
 
