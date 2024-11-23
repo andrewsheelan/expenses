@@ -9,9 +9,30 @@
     <%= render @expense %>
 
     <div class="mt-6 space-x-4">
-      <%= link_to "Edit expense", edit_expense_path(@expense), class: "rounded-lg py-3 px-5 bg-green-700 text-white hover:bg-green-600 inline-block font-medium" %>
-      <%= link_to "Back to expenses", expenses_path, class: "rounded-lg py-3 px-5 bg-gray-700 text-gray-200 hover:bg-gray-600 inline-block font-medium" %>
-      <%= button_to "Delete expense", @expense, method: :delete, class: "rounded-lg py-3 px-5 bg-pink-700 text-white hover:bg-pink-600 font-medium", form: { class: "inline-block" } %>
+      <%= link_to edit_expense_path(@expense), 
+          class: "px-6 py-3 rounded-lg bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white font-medium shadow-lg shadow-green-500/30 hover:shadow-green-500/50 transition-all duration-200 inline-flex items-center" do %>
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+        </svg>
+        Edit expense
+      <% end %>
+
+      <%= link_to expenses_path, 
+          class: "px-6 py-3 rounded-lg bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600 text-white font-medium shadow-lg shadow-gray-500/30 hover:shadow-gray-500/50 transition-all duration-200 inline-flex items-center" do %>
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        Back to expenses
+      <% end %>
+
+      <%= button_to @expense, method: :delete,
+          class: "px-6 py-3 rounded-lg bg-gradient-to-r from-pink-600 to-pink-700 hover:from-pink-500 hover:to-pink-600 text-white font-medium shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 transition-all duration-200 inline-flex items-center",
+          form: { class: "inline-block" } do %>
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+        </svg>
+        Delete expense
+      <% end %>
     </div>
   </div>
 </div>
