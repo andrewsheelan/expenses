@@ -1,10 +1,10 @@
 class ExpensesController < ApplicationController
+  before_action :set_expense, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
-  before_action :set_expense, only: [ :show, :edit, :update, :destroy ]
 
   # GET /expenses or /expenses.json
   def index
-    @expenses = current_user.expenses.includes(:category).order(date: :desc)
+    @expenses = current_user.expenses.includes(:category).search(params[:query]).order(date: :desc)
   end
 
   # GET /expenses/1 or /expenses/1.json

@@ -19,7 +19,11 @@
         <input type="text" 
                placeholder="Search categories..." 
                class="w-64 px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white placeholder-gray-500 focus:ring-2 focus:ring-pink-500 focus:border-transparent focus:outline-none"
-               data-controller="search">
+               data-controller="search"
+               data-search-target="input"
+               data-action="input->search#search"
+               data-search-url-value="<%= categories_path %>"
+               data-frame="categories_list">
         <div class="absolute right-3 top-2.5 text-gray-500">
           <i class="fas fa-search"></i>
         </div>
@@ -31,39 +35,41 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <% @categories.each do |category| %>
-      <div class="bg-gray-800 rounded-xl shadow-lg border border-pink-700 p-6 hover:border-pink-500 transition-colors duration-200">
-        <div class="flex justify-between items-start mb-4">
-          <h2 class="text-xl font-bold text-pink-400"><%= category.name %></h2>
-          <div class="flex space-x-2">
-            <%= link_to edit_category_path(category), class: "px-3 py-1.5 rounded-lg bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white font-medium shadow-lg shadow-green-500/30 hover:shadow-green-500/50 transition-all duration-200 inline-flex items-center" do %>
-              <i class="fas fa-edit mr-1"></i>
-            <% end %>
-            <%= button_to category_path(category), method: :delete, class: "px-3 py-1.5 rounded-lg bg-gradient-to-r from-pink-600 to-pink-700 hover:from-pink-500 hover:to-pink-600 text-white font-medium shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 transition-all duration-200 inline-flex items-center", form: { data: { turbo_confirm: "Are you sure?" } } do %>
-              <i class="fas fa-trash mr-1"></i>
-            <% end %>
+  <%= turbo_frame_tag "categories_list", data: { search_target: "results" } do %>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <% @categories.each do |category| %>
+        <div class="bg-gray-800 rounded-xl shadow-lg border border-pink-700 p-6 hover:border-pink-500 transition-colors duration-200">
+          <div class="flex justify-between items-start mb-4">
+            <h2 class="text-xl font-bold text-pink-400"><%= category.name %></h2>
+            <div class="flex space-x-2">
+              <%= link_to edit_category_path(category), class: "px-3 py-1.5 rounded-lg bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white font-medium shadow-lg shadow-green-500/30 hover:shadow-green-500/50 transition-all duration-200 inline-flex items-center" do %>
+                <i class="fas fa-edit mr-1"></i>
+              <% end %>
+              <%= button_to category_path(category), method: :delete, class: "px-3 py-1.5 rounded-lg bg-gradient-to-r from-pink-600 to-pink-700 hover:from-pink-500 hover:to-pink-600 text-white font-medium shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 transition-all duration-200 inline-flex items-center", form: { data: { turbo_confirm: "Are you sure?" } } do %>
+                <i class="fas fa-trash mr-1"></i>
+              <% end %>
+            </div>
           </div>
-        </div>
 
-        <% if category.description.present? %>
-          <p class="text-gray-300 mb-4 line-clamp-2"><%= category.description %></p>
-        <% end %>
+          <% if category.description.present? %>
+            <p class="text-gray-300 mb-4 line-clamp-2"><%= category.description %></p>
+          <% end %>
 
-        <div class="bg-gray-900/50 rounded-lg p-4">
-          <div class="text-xl font-bold text-green-400">
-            <%= category.expenses.count %> expenses
+          <div class="bg-gray-900/50 rounded-lg p-4">
+            <div class="text-xl font-bold text-green-400">
+              <%= category.expenses.count %> expenses
+            </div>
+            <p class="text-gray-400 text-sm mt-1">
+              Total: <%= number_to_currency(category.expenses.sum(:amount)) %>
+            </p>
           </div>
-          <p class="text-gray-400 text-sm mt-1">
-            Total: <%= number_to_currency(category.expenses.sum(:amount)) %>
-          </p>
-        </div>
 
-        <%= link_to category_path(category), class: "mt-4 px-3 py-1.5 rounded-lg bg-gradient-to-r from-pink-600 to-pink-700 hover:from-pink-500 hover:to-pink-600 text-white font-medium shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 transition-all duration-200 inline-flex items-center" do %>
-          <span>View Details</span>
-          <i class="fas fa-chevron-right ml-1"></i>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
+          <%= link_to category_path(category), class: "mt-4 px-3 py-1.5 rounded-lg bg-gradient-to-r from-pink-600 to-pink-700 hover:from-pink-500 hover:to-pink-600 text-white font-medium shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 transition-all duration-200 inline-flex items-center" do %>
+            <span>View Details</span>
+            <i class="fas fa-chevron-right ml-1"></i>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>

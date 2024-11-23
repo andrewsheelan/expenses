@@ -1,10 +1,10 @@
 class CategoriesController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_category, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
 
   # GET /categories
   def index
-    @categories = current_user.categories.includes(:expenses)
+    @categories = current_user.categories.search(params[:query]).order(created_at: :desc)
   end
 
   # GET /categories/1
