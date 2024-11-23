@@ -6,7 +6,7 @@
 [![Rails](https://img.shields.io/badge/rails-8.0.0-red.svg)](https://rubyonrails.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A modern expense tracking application built with Ruby on Rails, featuring real-time chat functionality and beautiful (glossed) dark-themed UI.
+A modern expense tracking application built with Ruby on Rails, featuring real-time chat functionality, AI assistance, and beautiful (glossed) dark-themed UI.
 
 ## Features
 
@@ -16,31 +16,25 @@ A modern expense tracking application built with Ruby on Rails, featuring real-t
 ![alt text](gallery/signin.png)
 
 #### Sign-up:
-
 ![alt text](gallery/signup.png)
 
 #### Dashboard:
-
 ![alt text](gallery/dashboard.png)
 
-
 #### Messages:
-
 ![alt text](gallery/messages.png)
 
 #### Conversations:
-
 ![alt text](gallery/conversations.png)
 ![alt text](gallery/conversations_search.png)
+![alt text](gallery/conversations_ai.png)
 
 #### Expenses:
-
 ![alt text](gallery/expenses.png)
 ![alt text](gallery/new_expense.png)
 ![alt text](gallery/edit_expense.png)
 
 #### Categories:
-
 ![alt text](gallery/categories.png)
 ![alt text](gallery/new_category.png)
 ![alt text](gallery/edit_category.png)
@@ -55,12 +49,15 @@ A modern expense tracking application built with Ruby on Rails, featuring real-t
 - Category-wise expense distribution
 - Detailed expense history
 
-### Real-time Chat
+### Real-time Chat with AI Assistant
 - Instant messaging between users
 - Real-time message updates using Action Cable
 - Beautiful chat interface with message timestamps
 - Support for multiple conversations
 - Local timezone display for messages
+- AI-powered chat assistant for expense-related queries
+- Intelligent responses using Hugging Face's language models
+- Real-time AI interactions in a floating chat widget
 
 ### User Authentication & Security
 - Secure user registration and login
@@ -68,6 +65,7 @@ A modern expense tracking application built with Ruby on Rails, featuring real-t
 - Protected routes and resources
 - User-specific data isolation
 - Remember me functionality
+- Secure API key management for AI services
 
 ### Modern UI/UX
 - Beautiful dark theme throughout
@@ -76,6 +74,7 @@ A modern expense tracking application built with Ruby on Rails, featuring real-t
 - Smooth animations and transitions
 - Tailwind CSS for styling
 - User-friendly forms and navigation
+- Floating AI chat widget
 
 ## Technical Stack
 
@@ -86,6 +85,7 @@ A modern expense tracking application built with Ruby on Rails, featuring real-t
 - Action Cable for WebSocket
 - Devise for authentication
 - Linear regression for predictions
+- Hugging Face API integration for AI chat
 
 ### Frontend
 - Tailwind CSS for styling
@@ -93,21 +93,18 @@ A modern expense tracking application built with Ruby on Rails, featuring real-t
 - Chart.js for visualizations
 - JavaScript for interactivity
 - Responsive design
+- Stimulus.js for AI chat interactions
 
 ### Testing & Quality
 - RSpec for testing
 - RuboCop for code style
 - GitHub Actions for CI
 - Test coverage tracking
+- SimpleCov for coverage reports
 
-## Getting Started
+## Setup Instructions
 
-### Prerequisites
-- Ruby 8.0.0
-- PostgreSQL
-- Node.js and Yarn
-
-### Installation
+### Basic Setup
 1. Clone the repository
 ```bash
 git clone https://github.com/andrewsheelan/expenses.git
@@ -130,6 +127,35 @@ rails db:create db:migrate db:seed
 bin/dev
 ```
 
+### AI Chat Setup
+1. Sign up for a Hugging Face account at https://huggingface.co/
+2. Go to your profile settings and navigate to "Access Tokens"
+3. Create a new token with "read" access
+4. Edit your Rails credentials:
+   ```bash
+   EDITOR="vim" rails credentials:edit
+   ```
+5. Add your Hugging Face API key:
+   ```yaml
+   huggingface:
+     api_key: your_api_key_here
+   ```
+6. Restart your Rails server
+
+## Usage
+
+### AI Chat Assistant
+The AI chat assistant is available on the conversations page as a floating widget. You can:
+- Ask questions about your expenses
+- Get insights about your spending
+- Request help with expense categorization
+- Get explanations about financial terms
+- Receive suggestions for expense management
+
+The AI assistant uses Hugging Face's language models to provide intelligent responses based on your queries.
+
+## Getting Started
+
 Visit `http://localhost:3000` and create an account to get started!
 
 ## Contributing
@@ -148,3 +174,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Chart.js](https://www.chartjs.org/)
 - [Devise](https://github.com/heartcombo/devise)
 - [Action Cable](https://guides.rubyonrails.org/action_cable_overview.html)
+- [Hugging Face](https://huggingface.co/)

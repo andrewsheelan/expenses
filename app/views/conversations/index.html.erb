@@ -106,6 +106,40 @@
           <% end %>
         </div>
       </div>
+
+      <!-- AI Conversation -->
+      <div class="fixed bottom-4 right-4 w-96" data-controller="ai-chat">
+        <div class="bg-gray-800 rounded-xl shadow-lg border border-pink-700 p-4">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-bold text-pink-400">AI Assistant</h3>
+            <button data-action="ai-chat#toggle" class="text-gray-400 hover:text-gray-300">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          
+          <div class="flex flex-col h-96">
+            <div data-ai-chat-target="messages" class="flex-1 overflow-y-auto mb-4 space-y-4">
+              <div class="mb-4">
+                <p class="text-sm text-pink-400">AI Assistant</p>
+                <p class="text-gray-300">Hello! I'm your AI assistant. How can I help you with your expenses today?</p>
+              </div>
+            </div>
+            
+            <form data-action="submit->ai-chat#send" class="flex space-x-2">
+              <input
+                type="text"
+                data-ai-chat-target="input"
+                class="flex-1 bg-gray-700 text-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                placeholder="Type your message..."
+              >
+              <button type="submit" class="px-4 py-2 rounded-lg bg-gradient-to-r from-pink-600 to-pink-700 hover:from-pink-500 hover:to-pink-600 text-white font-medium shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 transition-all duration-200">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

@@ -76,3 +76,6 @@ group :test do
   # Code coverage
   gem "simplecov"
 end
+
+# Gemfile
+gem "http"
