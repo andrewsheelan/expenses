@@ -29,13 +29,15 @@
     <!-- Messages Container -->
     <div class="bg-gray-800 rounded-lg shadow-lg">
       <%= turbo_stream_from @conversation %>
-      <div id="messages" 
-           class="p-6 space-y-6 max-h-[60vh] overflow-y-auto"
-           data-controller="scroll"
-           data-action="turbo:frame-load->scroll#scrollToBottom">
-        <%= render @messages %>
-      </div>
 
+      <!-- Messages -->
+      <div class="conversation-messages">
+        <div id="messages" 
+            class="p-6 space-y-6 max-h-[60vh] overflow-y-auto"
+            data-conversation-id="<%= @conversation.id %>">
+            <%= render 'conversation_messages', conversation: @conversation %>
+        </div>
+      </div>
       <!-- Message Form -->
       <div class="p-4 border-t border-gray-700">
         <%= form_with(model: [@conversation, @message],

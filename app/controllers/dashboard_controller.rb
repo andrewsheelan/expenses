@@ -22,10 +22,11 @@ class DashboardController < ApplicationController
 
   private
 
-  def calculate_predictions # rubocop:disable Metrics/AbcSize
+  def calculate_predictions # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     return {} if @monthly_spending.empty?
 
     # Calculate the trend using linear regression
+    # Generate x and y values
     x_values = @monthly_spending.keys.map.with_index { |date, i| i }
     y_values = @monthly_spending.values
 

@@ -1,0 +1,13 @@
+<% conversation.messages.includes(:user).each do |message| %>
+    <div class="message <%= message.user == current_user ? 'message-sent' : 'message-received' %> mb-4">
+    <div class="message-content <%= message.user == current_user ? 'bg-blue-600 ml-auto' : 'bg-gray-700' %> rounded-lg p-3 max-w-[80%]">
+        <p class="text-white"><%= message.content %></p>
+        <small class="text-gray-300 text-xs">
+        <%= message.user.email %> • 
+        <span class="message-time" data-timestamp="<%= message.created_at.iso8601 %>">
+          <%= message.created_at.strftime("%H:%M") %>
+        </span>
+        </small>
+    </div>
+    </div>
+<% end %>

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   
   authenticated :user do
+    mount ActionCable.server => '/cable'
     root 'dashboard#index', as: :authenticated_root
   end
   root 'devise/sessions#new'

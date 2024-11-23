@@ -10,6 +10,32 @@ A modern expense tracking application built with Ruby on Rails, featuring real-t
 
 ## Features
 
+### Screenshots
+Sign-in:
+![alt text](gallery/signin.png)
+
+Sign-up:
+![alt text](gallery/signup.png)
+
+Messages:
+![alt text](gallery/messages.png)
+
+Conversations:
+![alt text](gallery/conversations.png)
+
+Dashboard:
+![alt text](gallery/dashboard.png)
+
+Expenses:
+![alt text](gallery/expenses.png)
+![alt text](gallery/new_expense.png)
+
+Categories:
+![alt text](gallery/categories.png)
+![alt text](gallery/new_category.png)
+
+## Key Features
+
 ### Expense Management
 - Track personal expenses with categories
 - Monthly spending analytics
@@ -18,176 +44,96 @@ A modern expense tracking application built with Ruby on Rails, featuring real-t
 - Category-wise expense distribution
 - Detailed expense history
 
-### User Authentication
+### Real-time Chat
+- Instant messaging between users
+- Real-time message updates using Action Cable
+- Beautiful chat interface with message timestamps
+- Support for multiple conversations
+- Local timezone display for messages
+
+### User Authentication & Security
 - Secure user registration and login
-- Password reset functionality
+- Password reset functionality with email notifications
 - Protected routes and resources
 - User-specific data isolation
+- Remember me functionality
 
-### Real-time Chat
-- User-to-user private messaging
-- Real-time message updates
-- Modern chat interface
-- Message history
-- User avatars and status
-- Conversation management
-
-### Dashboard Analytics
-- Monthly spending trends
-- Category distribution charts
-- Spending predictions
-- Quick stats cards
-- Interactive data visualization
+### Modern UI/UX
+- Beautiful dark theme throughout
+- Responsive design for all screen sizes
+- Interactive charts and graphs
+- Smooth animations and transitions
+- Tailwind CSS for styling
+- User-friendly forms and navigation
 
 ## Technical Stack
 
 ### Backend
-- Ruby on Rails 8.0
-- SQLite database
-- Devise authentication
-- Active Record ORM
-- Real-time updates with Turbo Streams
+- Ruby 8.0.0
+- Rails 8.0.0
+- PostgreSQL database
+- Action Cable for WebSocket
+- Devise for authentication
+- Linear regression for predictions
 
 ### Frontend
 - Tailwind CSS for styling
-- Stimulus.js for JavaScript behaviors
-- Hotwire for real-time features
-- Chart.js for data visualization
-- Modern dark theme UI
+- Hotwire for dynamic updates
+- Chart.js for visualizations
+- JavaScript for interactivity
+- Responsive design
 
-## Models
+### Testing & Quality
+- RSpec for testing
+- RuboCop for code style
+- GitHub Actions for CI
+- Test coverage tracking
 
-### User
-- Email authentication
-- Has many expenses and categories
-- Manages conversations and messages
-- Profile information
+## Getting Started
 
-### Expense
-- Belongs to user and category
-- Tracks amount, date, and description
-- Supports custom titles
-- Date-based organization
+### Prerequisites
+- Ruby 8.0.0
+- PostgreSQL
+- Node.js and Yarn
 
-### Category
-- User-specific categories
-- Expense associations
-- Validation rules
-- Prevents deletion with existing expenses
-
-### Conversation
-- User-to-user messaging
-- Sender and recipient associations
-- Message management
-- Real-time updates
-
-### Message
-- Belongs to conversation and user
-- Real-time broadcasting
-- Content validation
-- Timestamp tracking
-
-## Features in Detail
-
-### Expense Tracking
-- Create, read, update, delete expenses
-- Categorize expenses
-- Track spending over time
-- Filter and search functionality
-- Export capabilities
-
-### Analytics Dashboard
-- Monthly spending trends
-- Category-wise distribution
-- Predictive analytics
-- Interactive charts
-- Custom date ranges
-
-### Messaging System
-- Real-time chat between users
-- Message history
-- User online status
-- Conversation management
-- Unread message indicators
-
-## Installation
-
+### Installation
 1. Clone the repository
 ```bash
-git clone [repository-url]
+git clone https://github.com/andrewsheelan/expenses.git
 cd expenses
 ```
 
 2. Install dependencies
 ```bash
 bundle install
+yarn install
 ```
 
 3. Setup database
 ```bash
-rails db:create
-rails db:migrate
-rails db:seed
+rails db:create db:migrate db:seed
 ```
 
 4. Start the server
 ```bash
-rails server
+bin/dev
 ```
 
-5. Visit http://localhost:3000
-
-## Test Users
-
-The seed file creates two test users:
-- Email: john@example.com (Password: password123)
-- Email: jane@example.com (Password: password123)
-
-## Development
-
-### Running Tests
-```bash
-rails test
-```
-
-### Code Style
-- Follow Ruby style guide
-- Use meaningful variable names
-- Add comments for complex logic
-- Keep methods small and focused
-
-## Security Features
-- User authentication with Devise
-- Protected routes and resources
-- Data isolation between users
-- Secure password handling
-- XSS protection
-- CSRF protection
-
-## UI/UX Features
-- Responsive design
-- Dark theme
-- Interactive elements
-- Real-time updates
-- Loading states
-- Error handling
-- Success notifications
-
-## Future Enhancements
-- Advanced reporting
-- Budget tracking
-- File attachments in chat
-- Email notifications
-- Mobile app version
-- Export/Import functionality
-- Advanced search features
+Visit `http://localhost:3000` and create an account to get started!
 
 ## Contributing
 1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
-This project is licensed under the MIT License - see the LICENSE.md file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+- [Ruby on Rails](https://rubyonrails.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Chart.js](https://www.chartjs.org/)
+- [Devise](https://github.com/heartcombo/devise)
+- [Action Cable](https://guides.rubyonrails.org/action_cable_overview.html)
