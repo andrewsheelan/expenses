@@ -28,6 +28,5 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
         message: { content: "Test message" }
       }
     end
-
   end
 end

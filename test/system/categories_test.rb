@@ -11,5 +11,4 @@ class CategoriesTest < ApplicationSystemTestCase
     visit categories_url
     assert_selector "h1", text: "Categories"
   end
-
 end
