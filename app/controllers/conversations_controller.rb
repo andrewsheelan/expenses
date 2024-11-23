@@ -18,7 +18,20 @@ class ConversationsController < ApplicationController
                                               recipient_id: params[:recipient_id])
     redirect_to @conversation
   end
+def search
+  @query = params[:query]
+  @conversations = current_user.conversations.includes(:messages, :sender, :recipient)
 
+  if @query.present?
+    @conversations = @conversations
+    .joins(:messages)
+    .where("lower(messages.content) LIKE :query OR lower(users.email) LIKE :query",
+          query: "%#{@query}%")
+    .distinct
+  end
+
+  @users = User.where.not(id: current_user.id)
+end
   private
 
   def set_conversation

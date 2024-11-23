@@ -8,7 +8,7 @@ class Category < ApplicationRecord
 
   scope :search, ->(query) {
     return all if query.blank?
-    
+
     where("lower(name) LIKE :query OR lower(description) LIKE :query", query: "%#{query.downcase}%")
   }
 end

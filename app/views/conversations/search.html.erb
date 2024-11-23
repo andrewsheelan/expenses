@@ -1,0 +1,104 @@
+<div class="min-h-screen bg-gray-900 text-white p-6">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-3xl font-bold text-pink-500">Search Messages</h1>
+        <p class="text-sm text-gray-400 mt-1">
+          Search through your conversations
+        </p>
+      </div>
+      
+      <%= link_to conversations_path, class: "px-4 py-2 rounded-lg bg-gradient-to-r from-pink-600 to-pink-700 hover:from-pink-500 hover:to-pink-600 text-white font-medium shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 transition-all duration-200 inline-flex items-center" do %>
+        <i class="fas fa-arrow-left mr-2"></i>
+        <span>Back to Messages</span>
+      <% end %>
+    </div>
+
+    <!-- Search Form -->
+    <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+      <%= form_tag search_conversations_path, method: :get, class: "space-y-4", data: { turbo_frame: "search_results" } do %>
+        <div class="relative">
+          <%= text_field_tag :query, 
+              params[:query], 
+              class: "w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-pink-500 focus:border-transparent focus:outline-none",
+              placeholder: "Search messages...",
+              autofocus: true %>
+          <div class="absolute right-4 top-3.5 text-gray-500">
+            <i class="fas fa-search text-lg"></i>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Results -->
+    <%= turbo_frame_tag "search_results" do %>
+      <div class="space-y-4">
+        <% if @query.present? %>
+          <p class="text-sm text-gray-400 mb-4">
+            <%= pluralize(@conversations.count, 'result') %> found for "<%= @query %>"
+          </p>
+          
+          <% if @conversations.any? %>
+            <div class="space-y-4">
+              <% @conversations.each do |conversation| %>
+                <% other_user = conversation.other_user(current_user) %>
+                <%= link_to conversation_path(conversation), class: "block bg-gray-800 rounded-lg p-4 hover:bg-gray-700 transition-colors duration-200" do %>
+                  <div class="flex items-start space-x-4">
+                    <!-- User Avatar -->
+                    <div class="w-12 h-12 rounded-full bg-pink-600 flex items-center justify-center flex-shrink-0">
+                      <span class="text-lg font-semibold">
+                        <%= other_user.email[0].upcase %>
+                      </span>
+                    </div>
+                    
+                    <!-- Message Content -->
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center justify-between">
+                        <h3 class="font-medium text-pink-400">
+                          <%= other_user.email %>
+                        </h3>
+                        <span class="text-xs text-gray-500">
+                          <%= conversation.messages.last&.created_at&.strftime("%b %d, %Y") %>
+                        </span>
+                      </div>
+                      
+                      <div class="mt-1 text-sm text-gray-300">
+                        <% matching_messages = conversation.messages.select { |m| m.content&.downcase&.include?(@query.downcase) } %>
+                        <% if matching_messages.any? %>
+                          <% matching_messages.each do |message| %>
+                            <div class="mb-2 last:mb-0">
+                              <span class="text-gray-500"><%= message.created_at.strftime("%H:%M") %></span>
+                              <span class="mx-2">·</span>
+                              <%= message.content %>
+                            </div>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="text-center py-12">
+              <div class="w-16 h-16 mx-auto mb-4 text-gray-600">
+                <i class="fas fa-search text-4xl"></i>
+              </div>
+              <h3 class="text-lg font-medium text-gray-400">No results found</h3>
+              <p class="text-gray-500 mt-2">Try adjusting your search terms</p>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="text-center py-12">
+            <div class="w-16 h-16 mx-auto mb-4 text-gray-600">
+              <i class="fas fa-search text-4xl"></i>
+            </div>
+            <h3 class="text-lg font-medium text-gray-400">Start searching</h3>
+            <p class="text-gray-500 mt-2">Enter keywords to search through your messages</p>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

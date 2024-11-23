@@ -11,15 +11,11 @@
       
       <!-- Search (placeholder for future feature) -->
       <div class="relative">
-        <input type="text" 
-               placeholder="Search conversations..." 
-               class="w-64 px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm placeholder-gray-500 focus:ring-2 focus:ring-pink-500 focus:border-transparent focus:outline-none"
-               disabled>
-        <div class="absolute right-3 top-2.5 text-gray-500">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-        </div>
+        <!-- Replace the existing search input with this link -->
+        <%= link_to search_conversations_path, class: "px-4 py-2 rounded-lg bg-gradient-to-r from-pink-600 to-pink-700 hover:from-pink-500 hover:to-pink-600 text-white font-medium shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 transition-all duration-200 inline-flex items-center" do %>
+          <i class="fas fa-search mr-2"></i>
+          <span>Search Messages</span>
+        <% end %>
       </div>
     </div>
 
