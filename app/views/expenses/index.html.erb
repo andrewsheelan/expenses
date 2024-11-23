@@ -53,14 +53,14 @@
               <td class="py-3 px-4 text-gray-300"><%= expense.category.name %></td>
               <td class="py-3 px-4 text-green-400 text-right"><%= number_to_currency(expense.amount) %></td>
               <td class="py-3 px-4 text-right space-x-2">
-                <%= link_to expense_path(expense), class: "px-3 py-1.5 rounded-lg bg-gradient-to-r from-pink-600 to-pink-700 hover:from-pink-500 hover:to-pink-600 text-white font-medium shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 transition-all duration-200 inline-flex items-center" do %>
-                  <i class="fas fa-eye mr-1"></i>
+                <%= link_to expense_path(expense), target: "_top", class: "px-3 py-1.5 rounded-lg bg-gradient-to-r from-pink-600 to-pink-700 hover:from-pink-500 hover:to-pink-600 text-white font-medium shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 transition-all duration-200 inline-flex items-center" do %>
+                  <i class="fas fa-eye"></i>
                 <% end %>
-                <%= link_to edit_expense_path(expense), class: "px-3 py-1.5 rounded-lg bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white font-medium shadow-lg shadow-green-500/30 hover:shadow-green-500/50 transition-all duration-200 inline-flex items-center" do %>
-                  <i class="fas fa-edit mr-1"></i>
+                <%= link_to edit_expense_path(expense), target: "_top", class: "px-3 py-1.5 rounded-lg bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white font-medium shadow-lg shadow-green-500/30 hover:shadow-green-500/50 transition-all duration-200 inline-flex items-center" do %>
+                  <i class="fas fa-edit"></i>
                 <% end %>
-                <%= button_to expense_path(expense), method: :delete, class: "px-3 py-1.5 rounded-lg bg-gradient-to-r from-pink-600 to-pink-700 hover:from-pink-500 hover:to-pink-600 text-white font-medium shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 transition-all duration-200 inline-flex items-center", form: { class: "inline" }, data: { confirm: "Are you sure?" } do %>
-                  <i class="fas fa-trash mr-1"></i>
+                <%= button_to expense_path(expense), target: "_top", method: :delete, class: "px-3 py-1.5 rounded-lg bg-gradient-to-r from-pink-600 to-pink-700 hover:from-pink-500 hover:to-pink-600 text-white font-medium shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 transition-all duration-200 inline-flex items-center", form: { class: "inline" }, data: { confirm: "Are you sure?" } do %>
+                  <i class="fas fa-trash"></i>
                 <% end %>
               </td>
             </tr>

@@ -1,8 +1,12 @@
 require "test_helper"
 
 class ExpensesControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
+    @user = users(:one)
     @expense = expenses(:one)
+    sign_in @user
   end
 
   test "should get index" do
@@ -17,12 +21,18 @@ class ExpensesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create expense" do
     assert_difference("Expense.count") do
-      post expenses_url,
-params: { expense: { amount: @expense.amount, category_id: @expense.category_id, date: @expense.date,
-description: @expense.description, title: @expense.title, user_id: @expense.user_id } }
+      post expenses_url, params: {
+        expense: {
+          amount: @expense.amount,
+          category_id: @expense.category_id,
+          date: @expense.date,
+          description: @expense.description,
+          title: @expense.title
+        }
+      }
     end
 
-    assert_redirected_to expense_url(Expense.last)
+    assert_redirected_to expenses_url
   end
 
   test "should show expense" do
@@ -36,10 +46,16 @@ description: @expense.description, title: @expense.title, user_id: @expense.user
   end
 
   test "should update expense" do
-    patch expense_url(@expense),
-params: { expense: { amount: @expense.amount, category_id: @expense.category_id, date: @expense.date,
-description: @expense.description, title: @expense.title, user_id: @expense.user_id } }
-    assert_redirected_to expense_url(@expense)
+    patch expense_url(@expense), params: {
+      expense: {
+        amount: @expense.amount,
+        category_id: @expense.category_id,
+        date: @expense.date,
+        description: @expense.description,
+        title: @expense.title
+      }
+    }
+    assert_redirected_to expenses_url
   end
 
   test "should destroy expense" do
@@ -48,5 +64,17 @@ description: @expense.description, title: @expense.title, user_id: @expense.user
     end
 
     assert_redirected_to expenses_url
+  end
+
+  test "should not access other user's expenses" do
+    other_expense = expenses(:three)  # belongs to users(:two)
+    get expense_url(other_expense)
+    assert_response :not_found
+  end
+
+  test "should search expenses" do
+    get expenses_url, params: { query: @expense.title.downcase }
+    assert_response :success
+    assert_select "div", text: /#{@expense.title}/
   end
 end

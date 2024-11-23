@@ -1,17 +1,33 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  amount: 9.99
+  title: Grocery Shopping
+  amount: 75.50
   date: 2024-11-22
-  description: MyText
-  category: one
+  description: Weekly groceries from Whole Foods
+  category: one  # Food category
   user: one
 
 two:
-  title: MyString
-  amount: 9.99
+  title: Bus Pass
+  amount: 45.00
   date: 2024-11-22
-  description: MyText
-  category: two
+  description: Monthly bus pass
+  category: two  # Transportation category
+  user: one
+
+three:
+  title: Movie Night
+  amount: 25.00
+  date: 2024-11-22
+  description: Cinema tickets
+  category: three  # Entertainment category
+  user: two
+
+four:
+  title: Electricity Bill
+  amount: 120.00
+  date: 2024-11-22
+  description: November electricity bill
+  category: four  # Bills category
   user: two

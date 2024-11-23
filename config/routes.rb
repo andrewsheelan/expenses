@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   resources :expenses
   resources :categories
   resources :conversations, only: [:index, :show, :create] do
+    collection do
+      get :search
+    end
     resources :messages, only: [:create]
   end
   

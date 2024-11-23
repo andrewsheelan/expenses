@@ -1,9 +1,21 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  description: MyString
+  name: Food
+  description: Daily meals and groceries
+  user: one
 
 two:
-  name: MyString
-  description: MyString
+  name: Transportation
+  description: Bus, train, and taxi expenses
+  user: one
+
+three:
+  name: Entertainment
+  description: Movies, games, and fun activities
+  user: two
+
+four:
+  name: Bills
+  description: Monthly utility bills
+  user: two
