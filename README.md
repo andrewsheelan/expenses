@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/andrewsheelan/expenses/actions/workflows/ci.yml/badge.svg)](https://github.com/andrewsheelan/expenses/actions/workflows/ci.yml)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
-[![Ruby](https://img.shields.io/badge/ruby-8.0.0-red.svg)](https://www.ruby-lang.org/en/)
+[![Ruby](https://img.shields.io/badge/ruby-3.3.5-red.svg)](https://www.ruby-lang.org/en/)
 [![Rails](https://img.shields.io/badge/rails-8.0.0-red.svg)](https://rubyonrails.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
